@@ -1,0 +1,2 @@
+recursive-include rfiweb/static/*
+recursive-include rfiweb/templates/*

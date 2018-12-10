@@ -1,0 +1,58 @@
+{%- extends "base.html" %}
+{% set active_page = "rfis" %}
+{% block head %}
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#rfis').DataTable();
+    $(".dataTables_wrapper").css("width","100%");
+} );
+  </script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+  <div class="col-md-2">
+      <form id="status" action="/rfisByStatus" method="post">
+          <div class="form-group">
+              <input class="btn btn-default btn-block" type="submit" id="statusbutton" name="status" value="RFIs by Status" />
+          </div>
+      </form>
+  </div>
+  <div class="col-md-2">
+      <form id="status" action="/rfis" method="post">
+          <div class="form-group">
+              <input class="btn btn-default btn-block" type="submit" id="requesterbutton" name="status" value="RFIs by Requester" />
+          </div>
+      </form>
+  </div>
+  </div>
+  <div class="row">
+
+  <table class="table table-striped table-bordered" id="rfis" style="width:100%">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>RFI Number</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>NIP</th>
+        <th>LTIOV</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for rfi in rfis %}
+      <tr>
+        <td>{{ rfi['rfi']['user'] }}</td>
+        <td>{{ rfi['rfi']['rfiNum']}}</td>
+        <td>{{ rfi['rfi']['requestName']}}</td>
+        <td>{{ rfi['rfi']['requestDescription'] }}</td>
+        <td>{{ rfi['rfi']['nip'] }}</td>
+        <td>{{ rfi['rfi']['ltiov'] }} </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{%- endblock %}
