@@ -38,6 +38,7 @@
         <th>Description</th>
         <th>NIP</th>
         <th>LTIOV</th>
+        <th>Priority</th>
       </tr>
     </thead>
     <tbody>
@@ -49,6 +50,7 @@
         <td>{{ rfi['rfi']['requestDescription'] }}</td>
         <td>{{ rfi['rfi']['nip'] }}</td>
         <td>{{ rfi['rfi']['ltiov'] }} </td>
+        <td>{{ rfi['v_priority'] }}</td>
       </tr>
       {%- endfor %}
     </tbody>

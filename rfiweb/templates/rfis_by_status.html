@@ -36,6 +36,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>LTIOV</th>
+        <th>Priority</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +47,7 @@
         <td>{{ rfi['rfi']['requestName']}}</td>
         <td>{{ rfi['rfi']['requestDescription'] }}</td>
         <td>{{ rfi['rfi']['ltiov'] }} </td>
+        <td>{{ rfi['v_priority'] }}
       </tr>
       {%- endfor %}
     </tbody>
