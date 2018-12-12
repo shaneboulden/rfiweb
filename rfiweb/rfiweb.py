@@ -25,8 +25,9 @@ def healthz():
 def index():
     return render_template('index.html')
 
-
-@application.route('/rfisByStatus', methods=["POST"])
+# the keycloak authenticator requires that all routes support GET and 
+# POST methods
+@application.route('/rfisByStatus', methods=["GET","POST"])
 def rfis_by_status():
     # a variable to concatenate json strings
     json_arr = []
@@ -37,7 +38,6 @@ def rfis_by_status():
     for instance in instances:
         resp1 = requests.get(pam_uri+'/services/rest/server/containers/RCM2_1.0.2/processes/instances/'+str(instance['process-instance-id'])+'/variables',auth=HTTPBasicAuth(pam_user,pam_pass),headers=headers).json()
         json_arr.append(resp1)
-    # need to do a json.loads to get this into a string
     return render_template('rfis_by_status.html', rfis=json_arr)
 
 
@@ -52,5 +52,4 @@ def rfis():
     for instance in instances:
         resp1 = requests.get(pam_uri+'/services/rest/server/containers/RCM2_1.0.2/processes/instances/'+str(instance['process-instance-id'])+'/variables',auth=HTTPBasicAuth(pam_user,pam_pass),headers=headers).json()
         json_arr.append(resp1)
-    # need to do a json.loads to get this into a string
     return render_template('rfis.html', rfis=json_arr)

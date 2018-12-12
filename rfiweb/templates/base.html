@@ -7,14 +7,23 @@
 
 <html lang="en">
 <head>
- <title>RFIweb</title>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
- <link rel="stylesheet" href="/static/dashboard.css">
+  <title>RFIweb</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" href="/static/dashboard.css">
+  <script src="/static/keycloak.js"></script>
+  <script>
+    var keycloak = Keycloak('/static/keycloak.json');
+    keycloak.init(keycloak.init({ onLoad: 'login-required' })).success( function() {
+      // user has logged in. note that Keycloak will not redirect back to the application 
+      // unless this succeeds
+    });
+  </script>
+</head>
  {% block head %}{% endblock %}
 </head>
 <body>

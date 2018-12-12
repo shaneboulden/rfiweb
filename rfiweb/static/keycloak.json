@@ -1,0 +1,6 @@
+{
+  "realm" : "rfiweb",
+  "auth-server-url" : "https://keycloak-server/auth",
+  "resource" : "rfiweb",
+  "public-client": "true"
+}
