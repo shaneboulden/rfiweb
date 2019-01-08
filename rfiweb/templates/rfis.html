@@ -27,8 +27,8 @@
       </form>
   </div>
   </div>
+  {% if rfis|length > 0 %}
   <div class="row">
-
   <table class="table table-striped table-bordered" id="rfis" style="width:100%">
     <thead>
       <tr>
@@ -56,5 +56,10 @@
     </tbody>
   </table>
   </div>
+  {% else %}
+  <div class="col-md-12">
+    <p>No RFI records to display</p>
+  </div>
+  {% endif %}
 </div>
 {%- endblock %}
