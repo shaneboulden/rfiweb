@@ -28,6 +28,7 @@ Set the following environment variables in the deployment config:
 RHPAM_URI    - the base Process Automation Manager (PAM) URI
 RHPAM_USER   - the PAM user
 RHPAM_PASS   - the PAM pass
+CONTAINER_ID - the ID of the deployed PAM container, eg; RCM2_1.0.1
 FLASK_SECRET - a value for CSRF protection
 ```
 
