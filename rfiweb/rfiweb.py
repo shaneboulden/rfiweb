@@ -12,6 +12,7 @@ application.secret_key = os.environ['FLASK_SECRET']
 pam_uri = os.environ['RHPAM_URI']
 pam_user = os.environ['RHPAM_USER']
 pam_pass = os.environ['RHPAM_PASS']
+container_id = os.environ['CONTAINER_ID']
 
 @application.route('/healthz')
 def healthz():
