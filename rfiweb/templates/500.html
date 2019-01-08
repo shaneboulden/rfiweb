@@ -1,0 +1,9 @@
+{%- extends "base.html" %}
+
+{% block content %}
+<h1 style="margin-top:30px;">500 error</h1>
+<h3><strong>Well, that didn't work</strong></h3>
+<p>{{ error_msg }}</p>
+<pre><code>{{ raw_error }}</code></pre>
+{%- endblock %}
+{%- block footer %}{%- endblock %}
