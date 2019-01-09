@@ -2,10 +2,12 @@
 
 from flask import Flask, render_template, flash, redirect, request
 from requests.auth import HTTPBasicAuth
+from requests.exceptions import HTTPError
 
 import requests
 import json
 import os
+import logging
 
 application = Flask(__name__)
 application.secret_key = os.environ['FLASK_SECRET']
@@ -13,6 +15,9 @@ pam_uri = os.environ['RHPAM_URI']
 pam_user = os.environ['RHPAM_USER']
 pam_pass = os.environ['RHPAM_PASS']
 container_id = os.environ['CONTAINER_ID']
+
+class PamContainerException(Exception):
+    pass
 
 @application.route('/healthz')
 def healthz():
@@ -46,15 +51,21 @@ def kie_response(template):
     # a variable to concatenate json strings
     json_arr = []
     headers = {'accept': 'application/json', 'content-type': 'application/json'}
+    resp=requests.get(pam_uri+'/services/rest/server/queries/processes/instances/variables/v_priority', auth=HTTPBasicAuth(pam_user,pam_pass), headers=headers)
     try:
         # get all instances in the RFI system
-        resp=requests.get(pam_uri+'/services/rest/server/queries/processes/instances/variables/v_priority', auth=HTTPBasicAuth(pam_user,pam_pass), headers=headers).json()
-        instances = resp['process-instance']
-        for instance in instances:
+        instances = resp.json()
+        for instance in instances['process-instance']:
             resp1 = requests.get(pam_uri+'/services/rest/server/containers/' + container_id + '/processes/instances/'+str(instance['process-instance-id'])+'/variables',auth=HTTPBasicAuth(pam_user,pam_pass),headers=headers).json()
+            if "cannot find container" in resp1:
+                raise PamContainerException(resp1)
             json_arr.append(resp1)
         return render_template(template, rfis=json_arr)
+    except PamContainerException as error:
+        logging.error(str(error))
+        return render_template('500.html', error_msg=str(error))
     except JSONDecodeError as error:
-       msg = "It looks like the KIE server didn't provide a valid JSON response. It might be worth checking your config, here's the response we tried to parse:"
-       return render_template('500.html', error_msg=msg, raw_error=error.doc)
+       msg = "It looks like the KIE server didn't provide a valid JSON response. Please contact the administrator."
+       logging.error(str(error))
+       return render_template('500.html', error_msg=msg)
 
