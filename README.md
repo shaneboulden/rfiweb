@@ -16,6 +16,27 @@ Start the application with gunicorn:
 ```
 gunicorn wsgi:application
 ```
+
+### podman and containers
+
+An `rfiweb` container image is available from [quay.io](https://quay.io/smileyfritz/rfiweb). This container image doesn't allow for Keycloak authorization. You can run the container with `podman` or `docker` locally:
+```
+podman run -d --name=rfiweb --net=host \
+-e RHPAM_USER=user \
+-e RHPAM_PASS="password" \
+-e RHPAM_URI="http://kie-server-url-without-trailing-slashes" \
+-e CONTAINER_ID=RCM2_1.0.1 \
+-e FLASK_SECRET=1234 \
+-ti quay.io/smileyfritz/rfiweb:latest
+```
+Once the container creates, you can verify with `podman ps`:
+```
+$ podman ps
+CONTAINER ID  IMAGE                              COMMAND               CREATED        STATUS            PORTS  NAMES
+73c4d7e1a83b  quay.io/smileyfritz/rfiweb:latest  gunicorn wsgi:app...  3 seconds ago  Up 3 seconds ago         rfiweb
+```
+The application will now be available at `http://localhost:8000`
+
 ### openshift
 
 Create a new application from the python 3.6 s2i builder:
