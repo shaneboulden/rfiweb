@@ -41,7 +41,7 @@ The application will now be available at `http://localhost:8000`
 
 Create a new application from the python 3.6 s2i builder:
 ```
-oc new-app python:3.6~https://github.com/jockey10/rfiweb.git
+oc new-app python:3.6~https://github.com/shaneboulden/rfiweb.git
 oc expose svc/rfiweb
 ```
 Set the following environment variables in the deployment config:
